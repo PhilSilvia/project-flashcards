@@ -6,23 +6,24 @@ import HomePage from "../Home/HomePage";
 import DeckViewer from "../Deck/DeckViewer";
 import DeckCreate from "../Deck/DeckCreate";
 import DeckStudy from "../Deck/DeckStudy";
+import DeckEdit from "../Deck/DeckEdit";
 import CardCreate from "../Deck/CardCreate";
+import CardEdit from "../Deck/CardEdit";
 
+// Sets up the layout and routes for the application
 function Layout() {
   return (
     <>
       <Header />
       <div className="container">
-        {/* TODO: Implement the screen starting here */}
         <Routes>
-          <Route path="/" element={<HomePage />}>
-            <Route path="deck/new" element={<DeckCreate />} />
-            <Route path="decks/:deckId" element={<DeckViewer />}>
-              <Route path="edit" element={<DeckCreate />} />
-              <Route path="study" element={<DeckStudy />} />
-              <Route path="cards/new" element={<CardCreate />} />
-              <Route path="cards/:cardId/edit" element={<CardCreate />} />
-            </Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="deck/new" element={<DeckCreate />} />
+          <Route path="decks/:deckId" element={<DeckViewer />}>
+            <Route path="edit" element={<DeckEdit />} />
+            <Route path="study" element={<DeckStudy />} />
+            <Route path="cards/new" element={<CardCreate />} />
+            <Route path="cards/:cardId/edit" element={<CardEdit />} />
           </Route>
           <Route path="/*" element={<NotFound />} />
         </Routes>
