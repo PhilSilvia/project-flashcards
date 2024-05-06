@@ -1,10 +1,10 @@
-.viewButton, .editButton, .createDeckButton {
+.viewButton, .editButton, .createDeckButton, .flipButton {
     background-color: #888888;
     border-color: #dddddd;
     color: #ffffff;
 }
 
-.studyButton, .addCardButton {
+.studyButton, .addCardButton, .nextButton {
     background-color: #00bfff;
     border-color: #dddddd;
     color: #ffffff;

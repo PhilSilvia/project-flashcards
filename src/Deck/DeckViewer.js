@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { readDeck } from "../utils/api/index";
 import CardList from "./CardList";
 
 function DeckViewer() {
     const [deck, setDeck] = useState({});
     const { deckId } = useParams();
+    const navigate = useNavigate();
+
+    const studyHandler = () => {
+        navigate(`/decks/${deckId}/study`);
+    }
 
     useEffect(() => {
         setDeck({});
@@ -32,14 +37,14 @@ function DeckViewer() {
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><Link to="/">Home</Link></li>
-                    <li class="breadcrumb-item">Deck Name</li>
+                    <li class="breadcrumb-item">{deck.name}</li>
                 </ol>
             </nav>
             <section>
                 <h3>{deck.name}</h3>
                 <p>{deck.description}</p>
                 <button className="editButton">&#128393;Edit</button>
-                <button className="studyButton">&#128214;Study</button>
+                <button className="studyButton" onClick={studyHandler}>&#128214;Study</button>
                 <button className="addCardButton">+ Add Cards</button>
                 <button className="deleteButton">&#128465;Delete</button>
                 <h2>Cards</h2>
