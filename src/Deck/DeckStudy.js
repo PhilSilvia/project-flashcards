@@ -57,7 +57,7 @@ function DeckStudy() {
     };
 
     if (deck && deck.cards) {                
-        const cardShown = showFront ? (
+        /*const cardShown = showFront ? (
             <div class="card-body">
                 <p class="card-text">{deck.cards[currentCard - 1].front}</p>
                 <button className="flipButton" onClick={flipHandler}>Flip</button>
@@ -68,7 +68,7 @@ function DeckStudy() {
                 <button className="flipButton" onClick={flipHandler}>Flip</button>
                 <button className="nextButton" onClick={nextHandler}>Next</button>
             </div>
-        )
+        )*/
         return (
             <div className="deckStudy">
                 <nav aria-label="breadcrumb">
@@ -84,7 +84,13 @@ function DeckStudy() {
                         <div class="card-title" >
                             <h5 class="card-title">Card {currentCard} of {deck.cards.length}</h5>
                         </div>
-                        {cardShown}
+                        <div class="card-body">
+                            <p class="card-text">
+                                {showFront ? deck.cards[currentCard - 1].front : deck.cards[currentCard - 1].back}
+                            </p>
+                            <button className="flipButton" onClick={flipHandler}>Flip</button>
+                            {showFront ? "" : <button className="nextButton" onClick={nextHandler}>Next</button>}
+                        </div>
                     </div>
                  ) : (
                     <div>
