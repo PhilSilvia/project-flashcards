@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { deleteDeck } from "../utils/api/index";
 
 // Display for an individual deck within the Deck List on the Homepage
 function DeckDisplay({ deck }) {
@@ -16,7 +17,21 @@ function DeckDisplay({ deck }) {
     }
     // Event handler for the Delete button
     const deleteHandler = () => {
-
+        if (window.confirm("Delete this deck?\n\nYou will not be able to recover it.")){
+            const abortController = new AbortController();
+            async function removeDeck() {
+                try {
+                    deleteDeck(deck.id, abortController.signal);
+                } catch(error) {
+                    if (error.name === "AbortError"){
+                        console.log("Aborted");
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+            removeDeck().then(window.location.reload());
+        }
     }
 
     return (

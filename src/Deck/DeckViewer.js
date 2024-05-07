@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { readDeck } from "../utils/api/index";
+import { readDeck, deleteDeck } from "../utils/api/index";
 import CardList from "./CardList";
 
 function DeckViewer() {
@@ -21,7 +21,21 @@ function DeckViewer() {
     };
 
     const deleteHandler = () => {
-        
+        if (window.confirm("Delete this deck?\n\nYou will not be able to recover it.")){
+            const abortController = new AbortController();
+            async function removeDeck() {
+                try {
+                    deleteDeck(deckId, abortController.signal);
+                } catch(error) {
+                    if (error.name === "AbortError"){
+                        console.log("Aborted");
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+            removeDeck().then(() => navigate("/"));
+        }
     };
 
     useEffect(() => {
