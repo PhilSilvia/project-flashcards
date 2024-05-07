@@ -78,7 +78,7 @@ function DeckStudy() {
                         <li class="breadcrumb-item">Study</li>
                     </ol>
                 </nav>
-                <h2>{deck.name}</h2>
+                <h2>Study: {deck.name}</h2>
                 {deck.cards.length > 2 ? (
                     <div class="card">
                         <div class="card-title" >

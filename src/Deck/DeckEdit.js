@@ -38,7 +38,7 @@ function DeckEdit() {
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><Link to="/">Home</Link></li>
                     <li class="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck.name}</Link></li>
-                    <li class="breadcrumb-item">Edit</li>
+                    <li class="breadcrumb-item">Edit Deck</li>
                 </ol>
             </nav>
             <h2>Edit Deck</h2>
