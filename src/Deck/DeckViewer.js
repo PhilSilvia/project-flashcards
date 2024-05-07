@@ -10,7 +10,19 @@ function DeckViewer() {
 
     const studyHandler = () => {
         navigate(`/decks/${deckId}/study`);
-    }
+    };
+
+    const addCardHandler = () => {
+        navigate(`/decks/${deckId}/cards/new`);
+    };
+
+    const editHandler = () => {
+        navigate(`/decks/${deckId}/edit`);
+    };
+
+    const deleteHandler = () => {
+        
+    };
 
     useEffect(() => {
         setDeck({});
@@ -43,10 +55,10 @@ function DeckViewer() {
             <section>
                 <h3>{deck.name}</h3>
                 <p>{deck.description}</p>
-                <button className="editButton">&#128393;Edit</button>
+                <button className="editButton" onClick={editHandler}>&#128393;Edit</button>
                 <button className="studyButton" onClick={studyHandler}>&#128214;Study</button>
-                <button className="addCardButton">+ Add Cards</button>
-                <button className="deleteButton">&#128465;Delete</button>
+                <button className="addCardButton" onClick={addCardHandler}>+ Add Cards</button>
+                <button className="deleteButton" onClick={deleteHandler}>&#128465;Delete</button>
                 <h2>Cards</h2>
             </section>
             <CardList cards={deck.cards} />

@@ -18,7 +18,7 @@ function Layout() {
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="deck/new" element={<DeckCreate />} />
+          <Route path="decks/new" element={<DeckCreate />} />
           <Route path="decks/:deckId" element={<DeckViewer />} />
           <Route path="decks/:deckId/edit" element={<DeckEdit />} />
           <Route path="decks/:deckId/study" element={<DeckStudy />} />

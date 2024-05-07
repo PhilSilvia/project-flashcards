@@ -38,6 +38,10 @@ function DeckStudy() {
         setShowFront(!showFront);
     };
 
+    const addCardHandler = () => {
+        navigate(`/decks/${deckId}/cards/new`);
+    };
+
     const nextHandler = () => {
         if (currentCard === deck.cards.length){
             if (window.confirm("Restart cards?\n\nClick 'cancel' to return to the home page.")) {
@@ -52,13 +56,12 @@ function DeckStudy() {
         }
     };
 
-    if (deck && deck.cards) {
-        const cardBody = showFront? (
+    if (deck && deck.cards) {                
+        const cardShown = showFront ? (
             <div class="card-body">
                 <p class="card-text">{deck.cards[currentCard - 1].front}</p>
                 <button className="flipButton" onClick={flipHandler}>Flip</button>
             </div>
-            
         ) : (
             <div class="card-body">
                 <p class="card-text">{deck.cards[currentCard - 1].back}</p>
@@ -76,13 +79,20 @@ function DeckStudy() {
                     </ol>
                 </nav>
                 <h2>{deck.name}</h2>
-                <div class="card">
-                    <div class="card-title" >
-                        <h5 class="card-title">Card {currentCard} of {deck.cards.length}</h5>
-                        {cardBody}
+                {deck.cards.length > 2 ? (
+                    <div class="card">
+                        <div class="card-title" >
+                            <h5 class="card-title">Card {currentCard} of {deck.cards.length}</h5>
+                        </div>
+                        {cardShown}
                     </div>
-                    
-                </div>
+                 ) : (
+                    <div>
+                        <h5>Not Enough Cards</h5>
+                        <p>You need at least 3 cards to study</p>
+                        <button className="addCardButton" onClick={addCardHandler}>+ Add Cards</button>
+                    </div>
+                )}
             </div>
         ); 
     }
