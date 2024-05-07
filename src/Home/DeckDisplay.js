@@ -39,7 +39,7 @@ function DeckDisplay({ deck }) {
         <div class="card" key={deck.id}>
             <div class="card-body">
                 <h5 class="card-title">{deck.name}</h5>
-                <h6 class="card-subtitle">{deck.cards.length} Cards</h6>
+                <h6 class="card-subtitle">{deck.cards.length} cards</h6>
                 <p class="card-text">{deck.description}</p>
                 <button className="viewButton" onClick={viewHandler}>&#128065;View</button>
                 <button className="studyButton" onClick={studyHandler}>&#128214;Study</button>

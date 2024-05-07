@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import CardEditForm from "./CardEditForm";
-import { readDeck } from "../utils/api/index";
+import { readDeck, readCard } from "../utils/api/index";
 
 // Card Editor page for the user to edit the front and back of an existing card
 function CardEdit() {
@@ -9,6 +9,8 @@ function CardEdit() {
     const { deckId, cardId } = useParams();
     // State variable to store the current deck information, mostly for the breadcrumb navigation
     const [ deck, setDeck ] = useState({});
+    // State variable to store the current card information
+    const [ card, setCard ] = useState({});
 
     // Loads the current deck's information
     useEffect(() => {
@@ -30,6 +32,26 @@ function CardEdit() {
         return () => { abortController.abort(); }
     }, [deckId]);
 
+    // Loads the current card's information
+    useEffect(() => {
+        setCard({});
+        const abortController = new AbortController();
+        async function loadCard() {
+            try {
+                const response = await readCard(cardId, abortController.signal);
+                setCard(response);
+            } catch (error) {
+                if (error.name === "AbortError") {
+                    console.log("Aborted");
+                } else {
+                    throw error;
+                }
+            }
+        }
+        loadCard();
+        return () => { abortController.abort(); }
+    }, [cardId]);
+
     // Once the deck is loaded successfully, display the JSX for the page
     if (deck){ 
         return (
@@ -42,7 +64,7 @@ function CardEdit() {
                     </ol>
                 </nav>
                 <h2>Edit Card</h2>
-                <CardEditForm />
+                <CardEditForm card={card} setCard={setCard}/>
             </div>
         );
     }

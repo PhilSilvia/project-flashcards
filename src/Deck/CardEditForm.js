@@ -1,35 +1,13 @@
-import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { readCard, updateCard } from "../utils/api/index";
+import { updateCard, createCard } from "../utils/api/index";
 
 // Card editing form so the user can change existing cards within a deck
-function CardEditForm() {
+function CardEditForm({ card, setCard }) {
     // Retrieve the deck id and card id from the url
-    const { deckId, cardId } = useParams();
+    const { deckId } = useParams();
     // Sets up the state variables to store the current card information
-    const [ card, setCard ] = useState({});
     // Aliases our navigation
     const navigate = useNavigate();
-
-    // Loads the current card's information
-    useEffect(() => {
-        setCard({});
-        const abortController = new AbortController();
-        async function loadCard() {
-            try {
-                const response = await readCard(cardId, abortController.signal);
-                setCard(response);
-            } catch (error) {
-                if (error.name === "AbortError") {
-                    console.log("Aborted");
-                } else {
-                    throw error;
-                }
-            }
-        }
-        loadCard();
-        return () => { abortController.abort(); }
-    }, [cardId]);
 
     // Event handler to keep track of the form values as they change
     const changeHandler = ({ target }) => {
@@ -46,7 +24,11 @@ function CardEditForm() {
         const abortController = new AbortController();
         async function changeCard() {
             try {
-                await updateCard(card, abortController.signal);
+                if (card.id){
+                    await updateCard(card, abortController.signal);
+                } else {
+                    await createCard(deckId, card, abortController.signal);
+                }
             } catch (error) {
                 if (error.name === "AbortError") {
                     console.log("Aborted");
@@ -65,32 +47,35 @@ function CardEditForm() {
     }
 
     // Returns the card update form JSX
-    return (
-        <form onSubmit={submitHandler}>
-            <div class="d-flex flex-column">
-                <label htmlFor="front">Front</label>
-                <textarea 
-                    name="front" 
-                    id="front" 
-                    rows="3" 
-                    onChange={changeHandler}
-                    value={card.front}>
-                </textarea>
-                <label htmlFor="back">Back</label>
-                <textarea 
-                    name="back" 
-                    id="back" 
-                    rows="3" 
-                    onChange={changeHandler}
-                    value={card.back}>
-                </textarea>
-                <div class="row">
-                    <button className="cancelButton" onClick={cancelHandler}>Cancel</button>
-                    <button className="submitButton" type="submit">Submit</button>
+    if (card) {
+        return (
+            <form onSubmit={submitHandler}>
+                <div class="d-flex flex-column">
+                    <label htmlFor="front">Front</label>
+                    <textarea 
+                        name="front" 
+                        id="front" 
+                        rows="3" 
+                        onChange={changeHandler}
+                        value={card.front}>
+                    </textarea>
+                    <label htmlFor="back">Back</label>
+                    <textarea 
+                        name="back" 
+                        id="back" 
+                        rows="3" 
+                        onChange={changeHandler}
+                        value={card.back}>
+                    </textarea>
+                    <div class="row">
+                        <button className="cancelButton" onClick={cancelHandler}>Cancel</button>
+                        <button className="submitButton" type="submit">Submit</button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    );
+            </form>
+        );
+    } 
+    return <p>Loading...</p>;
 }
 
 export default CardEditForm;

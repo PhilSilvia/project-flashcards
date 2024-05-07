@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import CardCreateForm from "./CardCreateForm";
+import CardEditForm from "./CardEditForm";
 import { readDeck } from "../utils/api/index";
 
 // Card Creation page for adding new cards to existing decks
@@ -10,6 +10,7 @@ function CardCreate() {
     // Sets up our state variables for storing the deck information, 
     // mostly for displaying on the breadcrumb
     const [ deck, setDeck ] = useState({});
+    const [ card, setCard ] = useState({ front: "", back: "" });
 
     // Loads the current deck's information
     useEffect(() => {
@@ -43,7 +44,7 @@ function CardCreate() {
                     </ol>
                 </nav>
                 <h2>{deck.name}: Add Card</h2>
-                <CardCreateForm />
+                <CardEditForm card={card} setCard={setCard}/>
             </div>
         );
     }
