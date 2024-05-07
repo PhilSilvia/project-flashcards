@@ -34,6 +34,7 @@ function DeckDisplay({ deck }) {
         }
     }
 
+    // Returns the JSX for the individual deck
     return (
         <div class="card" key={deck.id}>
             <div class="card-body">

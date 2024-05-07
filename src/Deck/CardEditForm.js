@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { readCard, updateCard } from "../utils/api/index";
 
+// Card editing form so the user can change existing cards within a deck
 function CardEditForm() {
+    // Retrieve the deck id and card id from the url
     const { deckId, cardId } = useParams();
+    // Sets up the state variables to store the current card information
     const [ card, setCard ] = useState({});
+    // Aliases our navigation
     const navigate = useNavigate();
 
     // Loads the current card's information

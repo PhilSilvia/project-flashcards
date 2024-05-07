@@ -3,8 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import CardEditForm from "./CardEditForm";
 import { readDeck } from "../utils/api/index";
 
+// Card Editor page for the user to edit the front and back of an existing card
 function CardEdit() {
+    // Retrieves the deck id and card id from the url
     const { deckId, cardId } = useParams();
+    // State variable to store the current deck information, mostly for the breadcrumb navigation
     const [ deck, setDeck ] = useState({});
 
     // Loads the current deck's information
@@ -27,6 +30,7 @@ function CardEdit() {
         return () => { abortController.abort(); }
     }, [deckId]);
 
+    // Once the deck is loaded successfully, display the JSX for the page
     if (deck){ 
         return (
             <div className="cardEdit">

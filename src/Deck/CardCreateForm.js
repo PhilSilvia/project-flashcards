@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { createCard } from "../utils/api";
 
+// Card creation form for the user to add new cards to a deck
 function CardCreateForm() {
     // Initialize our blank card for the user to fill in
     const blankCard = {

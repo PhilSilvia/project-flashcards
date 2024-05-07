@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import DeckCreateForm from "./DeckCreateForm";
 
+// Deck Creation interface for the user to add new decks to the application
 function DeckCreate() {
     return (
         <div className="deckCreate">

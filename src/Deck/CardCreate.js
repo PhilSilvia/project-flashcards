@@ -3,8 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import CardCreateForm from "./CardCreateForm";
 import { readDeck } from "../utils/api/index";
 
+// Card Creation page for adding new cards to existing decks
 function CardCreate() {
+    // Sets the current deck id from the url
     const { deckId } = useParams();
+    // Sets up our state variables for storing the deck information, 
+    // mostly for displaying on the breadcrumb
     const [ deck, setDeck ] = useState({});
 
     // Loads the current deck's information
@@ -43,6 +47,7 @@ function CardCreate() {
             </div>
         );
     }
+    // If the deck isn't loaded yet, we just display a brief loading page
     return <p>Loading...</p>;
 }
 

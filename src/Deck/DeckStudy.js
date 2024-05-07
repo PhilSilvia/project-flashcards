@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { readDeck } from "../utils/api/index";
-//import CardStudy from "./CardStudy";
 
+// Page for studying a deck's cards, flipping them and restarting the process
 function DeckStudy() {
+    // State variables for the deck
     const [ deck, setDeck ] = useState({});
+    // State variables for the currently viewed card
     const [ currentCard, setCurrentCard ] = useState(1);
+    // State variables for whether or not we are displaying the card's front or back
     const [ showFront, setShowFront ] = useState(true);
+    // Alias for navigation
     const navigate = useNavigate();
+    // Retrieve the current deck id from the url
     const { deckId } = useParams();
 
+    // Load the deck's information on page load and should the deck id change
     useEffect(() => {
         setDeck({});
         const abortController = new AbortController();
@@ -30,45 +36,39 @@ function DeckStudy() {
         return () => { abortController.abort(); }
     }, [deckId]);
 
-    useEffect(() => {
-
-    }, [currentCard]);
-
+    // Event handler for the flip button, which will swap between front and back view
     const flipHandler = () => {
         setShowFront(!showFront);
     };
 
+    // Event handler for the add card button, which shows up if there aren't sufficient cards in the deck
     const addCardHandler = () => {
         navigate(`/decks/${deckId}/cards/new`);
     };
 
+    // Event handler for the next button, which moves on to the next card or offers to reset if at the last card
     const nextHandler = () => {
+        // If we are on the last card, offer to restart or return home
         if (currentCard === deck.cards.length){
+            // If we restart, reset the current card and return to the card's front
             if (window.confirm("Restart cards?\n\nClick 'cancel' to return to the home page.")) {
                 setCurrentCard(1);
                 setShowFront(true);
-            } else {
+            } 
+            // If we don't want to restart, return home
+            else {
                 navigate("/");
             }
-        } else {
+        } 
+        // If we're not on the last card, move on to the front of the next one
+        else {
             setCurrentCard(currentCard + 1);
             setShowFront(true);
         }
     };
 
+    // Once we've loaded the deck successfully, return the JSX for the page
     if (deck && deck.cards) {                
-        /*const cardShown = showFront ? (
-            <div class="card-body">
-                <p class="card-text">{deck.cards[currentCard - 1].front}</p>
-                <button className="flipButton" onClick={flipHandler}>Flip</button>
-            </div>
-        ) : (
-            <div class="card-body">
-                <p class="card-text">{deck.cards[currentCard - 1].back}</p>
-                <button className="flipButton" onClick={flipHandler}>Flip</button>
-                <button className="nextButton" onClick={nextHandler}>Next</button>
-            </div>
-        )*/
         return (
             <div className="deckStudy">
                 <nav aria-label="breadcrumb">
@@ -102,6 +102,7 @@ function DeckStudy() {
             </div>
         ); 
     }
+    // If we are still waiting on the deck load, show a simple loading page
     return <p>Loading...</p>;
 }
 
