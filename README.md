@@ -20,3 +20,7 @@ Once a deck is created, the user can study the deck by working through each card
 # Notes
 
 A deck must have at least 3 cards for the user to study it. Decks composed of 2 cards or fewer are of insufficient size. 
+
+# Technology
+
+Created using React.js, Javascript, HTML, and CSS with the Bootstrap framework to assist with styling. 
